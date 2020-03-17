@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <form action="" id="user_form">
+
+  </form>
+  <!-- 使用art-template ,要安装-->
+  <script type="text/template" id="temp">
+    <div>
+      <label for="">用户名：</label>
+      <input type="text" value="{{user.username}}">
+    </div>
+    <div>
+      <label for="">年龄</label>
+      <input type="text" value="{{user.age}}">
+    </div>
+    <div>
+      <label for="">职业</label>
+      <select name="" id="">
+        {{each jobs}}
+        {{if user.job===$value.id}}
+        <option value="{{$value.id}}" selected>{{$value.name}}</option>
+        {{else}}
+        <option value="{{$value.id}}">{{$value.name}}</option>
+        {{ /if }}
+        {{/each}}
+        </option>
+      </select>
+    </div>
+  </script>
+  <script src="./node_modules/art-template/lib/template-web.js"></script>
+  <!-- <script src="./node_modules/jquery/dist/jquery.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script>
+    function get(url, callback) {
+      let xhr = new XMLHttpRequest()
+      xhr.onload = function () {
+        callback(xhr.responseText)
+      }
+      xhr.open('get', url, true)
+      xhr.send()
+    }
+    // 在请求（http://127.0.0.1:3000/）该本地数据之前：
+    // 先 npm i global json-server
+    // 再 该.json目录下的命令窗口输入 json-server --watch xx.json
+
+    // callback方法
+    // get('http://127.0.0.1:3000/users/1', function (data) {
+    //     get('http://127.0.0.1:3000/jobs', function (jobs) {
+    //       let htmlStr = template('temp', {
+    //         user: JSON.parse(data),
+    //         jobs: JSON.parse(jobs)
+    //       })
+    //       document.querySelector("#user_form").innerHTML = htmlStr
+    //     })
+    //   }) 
+    // jQuery
+    let data ={}
+    $.get('http://127.0.0.1:3000/users/1').then(data => {
+      data.user=data
+      return $.get('http://127.0.0.1:3000/jobs')
+    }).then(jobs => {
+      data.jobs=jobs
+      let htmlStr = template('temp', {data })
+      document.querySelector("#user_form").innerHTML = htmlStr
+    })
+    // Promise封装ajax-1
+    // function Pget(url) {
+    //   return new Promise((res, rej) => {
+    //     let xhr = new XMLHttpRequest()
+    //     xhr.onload = function () {
+    //       res(xhr.responseText)
+    //     }
+    //     xhr.onerror=function(err) {
+    //       rej(err)
+    //     }
+    //     xhr.open('get', url, true)
+    //     xhr.send()
+    //   })
+    // }
+    // let data ={}
+    // Pget('http://127.0.0.1:3000/users/1').then(data => {
+    //   data.user=data
+    //   return Pget('http://127.0.0.1:3000/jobs')
+    // }).then(jobs => {
+    //   data.jobs=jobs
+    //   let htmlStr = template('temp', {data })
+    //   document.querySelector("#user_form").innerHTML = htmlStr
+    // })
+    // Promise封装ajax-2
+    // function Pget(url, callback) {
+    //   return new Promise((res, rej) => {
+    //     let xhr = new XMLHttpRequest()
+    //     xhr.onload = function () {
+    //       callback && callback(JSON.parse(xhr.responseText))
+    //       res(JSON.parse(xhr.responseText))
+    //     }
+    //     xhr.onerror = function (err) {
+    //       rej(err)
+    //     }
+    //     xhr.open('get', url, true)
+    //     xhr.send()
+    //   })
+    // }
+    // // 既可以
+    // let data = {}
+    // Pget('http://127.0.0.1:3000/users/1').then(data => {
+    //   data.user = data
+    //   return Pget('http://127.0.0.1:3000/jobs')
+    // }).then(jobs => {
+    //   data.jobs = jobs
+    //   let htmlStr = template('temp', {
+    //     data
+    //   })
+    //   document.querySelector("#user_form").innerHTML = htmlStr
+    // })
+    // // 也可以
+    // Pget('http://127.0.0.1:3000/users/1', function (data) {
+    //   console.log(data);
+    // })
+  </script>
+</body>
+
+</html>

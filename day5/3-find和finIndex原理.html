@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let arr = [{
+        id: 1,
+        name: "张三"
+      },
+      {
+        id: 2,
+        name: "张三2"
+      },
+      {
+        id: 3,
+        name: "张三3"
+      },
+      {
+        id: 4,
+        name: "张三4"
+      },
+    ]
+    // 数组的方法：find 找到符合条件的数据，并返回。如何没有符合的返回undefined
+    let one = arr.find(item => {
+      return item.id === 1
+    })
+    console.log(one);
+    // 数组中find的原理
+    Array.prototype.myFind = function (callback) {
+      for (let i = 0; i < this.length; i++) {
+        if (callback(this[i], i)) {
+          return this[i]
+        }
+      }
+    }
+    let myone = arr.myFind((item, index) => {
+      // console.log(item, index);
+      return item.id === 3
+    })
+    console.log(myone);
+    
+    // findIndex的原理
+    Array.prototype.myFindIndex = function (callback) {
+      for (let i = 0; i < this.length; i++) {
+        if (callback(this[i], i)) {
+          return i
+        }
+      }
+    }
+    let res = arr.myFindIndex((item, index) => {
+      return item.id === 2
+    })
+    console.log(res);
+
+    let i = arr.findIndex(item => {
+      return item.id === 2
+    })
+    console.log(i);
+  </script>
+</body>
+
+</html>

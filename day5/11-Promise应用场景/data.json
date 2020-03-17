@@ -1,0 +1,53 @@
+{
+  "users": [{
+      "id": 1,
+      "username": "admin",
+      "age": 18,
+      "job": 2
+    },
+    {
+      "id": 2,
+      "username": "kris",
+      "age": 26,
+      "job": 3
+    },
+    {
+      "id": 3,
+      "username": "lisa",
+      "age": 18,
+      "job": 1
+    },
+    {
+      "id": 4,
+      "username": "kity",
+      "age": 32,
+      "job": 5
+    }
+  ],
+  "jobs": [{
+      "id": 1,
+      "name": "学生"
+    },
+    {
+      "id": 2,
+      "name": "工程师"
+    },
+    {
+      "id": 3,
+      "name": "律师"
+    },
+    {
+      "id": 4,
+      "name": "漫画家"
+    },
+    {
+      "id": 5,
+      "name": "医生"
+    },
+    {
+      "id": 6,
+      "name": "电竞职业玩家"
+    }
+
+  ]
+}

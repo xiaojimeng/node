@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "art-template": "^4.13.2",
+    "commander": "^4.1.1"
+  }
+}

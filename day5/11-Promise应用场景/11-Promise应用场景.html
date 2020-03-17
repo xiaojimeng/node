@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <form action="" id="user_form">
+
+  </form>
+  <!-- 使用art-template ,要安装-->
+  <script type="text/template" id="temp">
+    <div>
+      <label for="">用户名：</label>
+      <input type="text" value="{{user.username}}">
+    </div>
+    <div>
+      <label for="">年龄</label>
+      <input type="text" value="{{user.age}}">
+    </div>
+    <div>
+      <label for="">职业</label>
+      <select name="" id="">
+        <!-- <option value="">学生</option>
+        <option value="">工程师</option>
+        <option value="">律师</option>
+        <option value="">漫画家</option>
+        <option value="">医生</option>
+        <option value="">电竞职业玩家</option> -->
+       <!--  {{each jobs}}
+        <option value="{{$value.id}}">{{$value.name}}</option>
+        {{/each}} -->
+        {{each jobs}}
+        {{if user.job===$value.id}}
+        <option value="{{$value.id}}" selected>{{$value.name}}</option>
+        {{else}}
+        <option value="{{$value.id}}">{{$value.name}}</option>
+        {{ /if }}
+        {{/each}}
+        </option>
+      </select>
+    </div>
+  </script>
+  <script src="./node_modules/art-template/lib/template-web.js"></script>
+  <script>
+    function get(url, callback) {
+      let xhr = new XMLHttpRequest()
+      xhr.onload = function () {
+        callback(xhr.responseText)
+      }
+      xhr.open('get', url, true)
+      xhr.send()
+    }
+    // 在请求（http://127.0.0.1:3000/）该本地数据之前：
+    // 先 npm i global json-server
+    // 再 该.json目录下的命令窗口输入 json-server --watch xx.json
+    get('http://127.0.0.1:3000/users/1', function (data) {
+      get('http://127.0.0.1:3000/jobs', function (JobsData) {
+        let htmlStr = template('temp', {
+          user: JSON.parse(data),
+          jobs: JSON.parse(JobsData)
+        })
+        document.querySelector("#user_form").innerHTML = htmlStr
+      })
+    })
+  </script>
+</body>
+
+</html>

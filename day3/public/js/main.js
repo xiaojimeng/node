@@ -1,0 +1,1 @@
+window.alert("哈哈哈哈哈")
